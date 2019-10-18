@@ -54,6 +54,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     private func setupSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
     }
     
     // MARK: UICollectionViewDataSource, UICollectionViewDelegate
@@ -66,5 +69,13 @@ class PhotosCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellId", for: indexPath)
         cell.backgroundColor = .red
         return cell
+    }
+}
+
+// MARK: UISearchBarDelegate
+
+extension PhotosCollectionViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
     }
 }
