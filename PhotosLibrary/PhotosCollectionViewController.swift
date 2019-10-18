@@ -10,14 +10,20 @@ import UIKit
 
 class PhotosCollectionViewController: UICollectionViewController {
     private lazy var addBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self(), action: #selector(addBarButtonTapped))
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonTapped))
     }()
     
     private lazy var actionBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionBarButtonTapped))
     }()
     
-    @objc func addBarButtonTapped()
+    @objc private func addBarButtonTapped() {
+        print(#function)
+    }
+    
+    @objc private func actionBarButtonTapped() {
+        print(#function)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +31,12 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = .orange
         setupNavigationBar()
         setupCollectionView()
+        setupSearchBar()
     }
+    
+    // MARK: Navigation Items Action
+    
+    // MARK: Setup UI Elements
     
     private func setupCollectionView() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellId")
@@ -37,9 +48,15 @@ class PhotosCollectionViewController: UICollectionViewController {
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         titleLabel.textColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.4980392157, alpha: 1)
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
+        navigationItem.rightBarButtonItems = [actionBarButtonItem, addBarButtonItem]
     }
     
-    // MARK: UI
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+    }
+    
+    // MARK: UICollectionViewDataSource, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
